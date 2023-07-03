@@ -1,6 +1,7 @@
 "use client";
 // import Image from "next/image";
 import { useState, useEffect } from "react";
+import CountryCard from "@/components/CountryCard";
 
 export default function Home() {
   const [countries, setCountries] = useState([]);
@@ -12,13 +13,13 @@ export default function Home() {
     console.log(JSON.stringify(data));
   };
 
-  // fetchCountries();
+  fetchCountries();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {countries &&
         countries.map((country, index) => (
-          <p key={index}>{country.name.common}</p>
+          <CountryCard key={index} data={country} />
         ))}
       <button className="bg-slate-100 text-black" onClick={fetchCountries}>
         fetch countries
@@ -26,3 +27,24 @@ export default function Home() {
     </main>
   );
 }
+
+// export function CountryCard({ data }) {
+//   return (
+//     <>
+//       <span>{data.flag}</span>
+//       <p>{data.name.common}</p>
+//       <p>
+//         <span>Population: </span>
+//         {data.population}
+//       </p>
+//       <p>
+//         <span>Region: </span>
+//         {data.region}
+//       </p>
+//       <p>
+//         <span>Capital: </span>
+//         {data.capital}
+//       </p>
+//     </>
+//   );
+// }
