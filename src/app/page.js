@@ -9,7 +9,7 @@ const apiURL = "https://restcountries.com/v3.1/all";
 
 export default function Home() {
   const [countries, setCountries] = useState(countriesFromLocalStorage);
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState(countries);
   const [searchField, setSearchField] = useState("");
   const [filterField, setFilterField] = useState("");
 
@@ -17,18 +17,24 @@ export default function Home() {
 
   // concerning these handlers below, i want to look into maybe doing this server side, and just showing the rendered stuff, i beleive this is possible with next13.
   function handleSearch(e) {
-    //this is where we use an algorithm to create a copy of countries and filter out show results dynamically, like if you start typing "america", it will show like all countries with a, then am, then ame, etc.
-    const query = e.target.value;
-    const resultsArray = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(query.toLowerCase())
+    const querySearch = e.target.value;
+    const searchArray = filteredCountries.filter((country) =>
+      country.name.common.toLowerCase().includes(querySearch.toLowerCase())
     );
-    // console.log(resultsArray);
-    setFilteredCountries(resultsArray);
-    setSearchField(query);
+
+    // console.log(searchArray);
+    setFilteredCountries(searchArray);
+    setSearchField(querySearch);
   }
   function handleFilter(e) {
-    //this is where we use an algorithm, using the same copy array we use from handleSearch, to apply another layer of filter. so like this one is for region, and we can employ handlesearch on top of the handlefilter.
-    setFilterField(e.target.value);
+    const querySearch = e.target.value;
+    const searchArray = filteredCountries.filter((country) =>
+      country.region.toLowerCase().includes(querySearch.toLowerCase())
+    );
+
+    // console.log(searchArray);
+    setFilteredCountries(searchArray);
+    setFilterField(querySearch);
   }
 
   const fetchCountries = async () => {
@@ -39,9 +45,9 @@ export default function Home() {
     // console.log(JSON.stringify(data));
   };
 
-  useEffect(() => {
-    // handleSearch(searchField);
-  }, [searchField, filterField]);
+  // useEffect(() => {
+
+  // }, [searchField, filterField]);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
@@ -61,7 +67,7 @@ export default function Home() {
         <p>{searchField}</p>
         {/* <label for="filter">Filter</label> */}
         <select name="filter" id="filter" onChange={(e) => handleFilter(e)}>
-          <option>Filter by Region</option>
+          <option value="">Filter by Region</option>
           <option value="Africa">Africa</option>
           <option value="America">America</option>
           <option value="Asia">Asia</option>
@@ -70,7 +76,7 @@ export default function Home() {
         </select>
         <p>{filterField}</p>
       </div>
-      {filteredCountries.length != 0 ? (
+      {/* {filteredCountries.length != 0 ? (
         <>
           {filteredCountries &&
             filteredCountries.map((country, index) => (
@@ -84,7 +90,11 @@ export default function Home() {
               <CountryCard key={index} data={country} />
             ))}
         </>
-      )}
+      )} */}
+      {filteredCountries &&
+        filteredCountries.map((country, index) => (
+          <CountryCard key={index} data={country} />
+        ))}
 
       <button className="bg-slate-100 text-black" onClick={fetchCountries}>
         fetch countries
