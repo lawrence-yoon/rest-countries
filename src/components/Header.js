@@ -1,5 +1,5 @@
-import Moon from "./ui/Moon";
-import { MoonSolid } from "./ui/Moon";
+import Moon from "./ui/icons/Moon";
+import { MoonSolid } from "./ui/icons/Moon";
 
 function Header() {
   return (
