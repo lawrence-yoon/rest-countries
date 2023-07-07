@@ -2,6 +2,7 @@
 // import Image from "next/image";
 import { useState, useEffect } from "react";
 import CountryCard from "@/components/CountryCard";
+import MagnifyingGlass from "@/components/ui/icons/MagnifyingGlass";
 
 const countriesFromLocalStorage = JSON.parse(localStorage.getItem("data"));
 
@@ -18,9 +19,11 @@ export default function Home() {
   // concerning these handlers below, i want to look into maybe doing this server side, and just showing the rendered stuff, i beleive this is possible with next13.
   function handleSearch(e) {
     const querySearch = e.target.value;
-    const searchArray = filteredCountries.filter((country) =>
-      country.name.common.toLowerCase().includes(querySearch.toLowerCase())
-    );
+    const searchArray = querySearch
+      ? filteredCountries.filter((country) =>
+          country.name.common.toLowerCase().includes(querySearch.toLowerCase())
+        )
+      : countries;
 
     // console.log(searchArray);
     setFilteredCountries(searchArray);
@@ -28,7 +31,7 @@ export default function Home() {
   }
   function handleFilter(e) {
     const querySearch = e.target.value;
-    const searchArray = filteredCountries.filter((country) =>
+    const searchArray = countries.filter((country) =>
       country.region.toLowerCase().includes(querySearch.toLowerCase())
     );
 
@@ -50,20 +53,23 @@ export default function Home() {
   // }, [searchField, filterField]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <div className="flex flex-col justify-between mx-auto border">
+    <main className="flex min-h-screen flex-col items-center pt-20">
+      <div className="flex flex-col justify-between w-full px-4">
         {/* my thinking is, mutate the countries array?
         or, create a copy, that renders if searchField exists, and hides the main one, if it doesnt.*/}
         {/* <label for="search">Search</label> */}
-        <input
-          id="search"
-          name="search"
-          className="border"
-          type="text"
-          placeholder="Search for a country..."
-          onChange={(e) => handleSearch(e)}
-          value={searchField}
-        ></input>
+        <div className="flex flex-row border rounded-lg p-2">
+          <MagnifyingGlass className="p-2 px-6" />
+          <input
+            id="search"
+            name="search"
+            className="p-2 outline-none flex-grow"
+            type="text"
+            placeholder="Search for a country..."
+            onChange={(e) => handleSearch(e)}
+            value={searchField}
+          />
+        </div>
         <p>{searchField}</p>
         {/* <label for="filter">Filter</label> */}
         <select name="filter" id="filter" onChange={(e) => handleFilter(e)}>
@@ -74,7 +80,9 @@ export default function Home() {
           <option value="Europe">Europe</option>
           <option value="Oceania">Oceania</option>
         </select>
-        <p>{filterField}</p>
+        <p>
+          {filterField} {filteredCountries.length}
+        </p>
       </div>
       {/* {filteredCountries.length != 0 ? (
         <>
@@ -91,10 +99,12 @@ export default function Home() {
             ))}
         </>
       )} */}
-      {filteredCountries &&
-        filteredCountries.map((country, index) => (
-          <CountryCard key={index} data={country} />
-        ))}
+      <div className="flex flex-col w-full p-4 gap-4">
+        {filteredCountries &&
+          filteredCountries.map((country, index) => (
+            <CountryCard key={index} data={country} />
+          ))}
+      </div>
 
       <button className="bg-slate-100 text-black" onClick={fetchCountries}>
         fetch countries
@@ -103,24 +113,3 @@ export default function Home() {
     </main>
   );
 }
-
-// export function CountryCard({ data }) {
-//   return (
-//     <>
-//       <span>{data.flag}</span>
-//       <p>{data.name.common}</p>
-//       <p>
-//         <span>Population: </span>
-//         {data.population}
-//       </p>
-//       <p>
-//         <span>Region: </span>
-//         {data.region}
-//       </p>
-//       <p>
-//         <span>Capital: </span>
-//         {data.capital}
-//       </p>
-//     </>
-//   );
-// }
