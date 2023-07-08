@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center pt-20">
-      <div className="flex flex-col justify-between w-full px-4">
+      <div className="flex flex-col justify-between w-full px-4 gap-4">
         {/* my thinking is, mutate the countries array?
         or, create a copy, that renders if searchField exists, and hides the main one, if it doesnt.*/}
         {/* <label for="search">Search</label> */}
@@ -78,8 +78,15 @@ export default function Home() {
         </div>
         <p>{searchField}</p>
         {/* <label for="filter">Filter</label> */}
-        <select name="filter" id="filter" onChange={(e) => handleFilter(e)}>
-          <option value="">Filter by Region</option>
+        <select
+          name="filter"
+          id="filter"
+          className="border rounded-lg w-fit p-4 self-start"
+          onChange={(e) => handleFilter(e)}
+        >
+          <option className="hidden" value="">
+            Filter by Region
+          </option>
           <option value="Africa">Africa</option>
           <option value="America">America</option>
           <option value="Asia">Asia</option>
