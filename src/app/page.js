@@ -10,7 +10,6 @@ const apiURL = "https://restcountries.com/v3.1/all";
 
 export default function Home() {
   const [countries, setCountries] = useState(countriesFromLocalStorage);
-  const [filteredCountries, setFilteredCountries] = useState(countries);
   const [searchField, setSearchField] = useState("");
   const [filterField, setFilterField] = useState("");
 
@@ -23,28 +22,24 @@ export default function Home() {
   // save most state to local storage, so that when user is routed back to root, previous filters should still be there. i think best way to do that is to put all these state into local storage.
 
   // concerning these handlers below, i want to look into maybe doing this server side, and just showing the rendered stuff, i beleive this is possible with next13.
+
+  // literally just fixed it with some lines. amazing. thanks kyle aka webdevsimplified
   function handleSearch(e) {
     const querySearch = e.target.value;
-    const searchArray = filteredCountries.filter((country) =>
-      country.name.common.toLowerCase().includes(querySearch.toLowerCase())
-    );
-    // console.log(searchArray);
-    if (!searchArray) {
-      setFilteredCountries(countries);
-    }
-    setFilteredCountries(searchArray);
     setSearchField(querySearch);
   }
   function handleFilter(e) {
     const querySearch = e.target.value;
-    const searchArray = countries.filter((country) =>
-      country.region.toLowerCase().includes(querySearch.toLowerCase())
-    );
-
-    // console.log(searchArray);
-    setFilteredCountries(searchArray);
     setFilterField(querySearch);
   }
+
+  const filteredCountriesRegion = countries.filter((country) =>
+    country.region.toLowerCase().includes(filterField.toLowerCase())
+  );
+
+  const filteredCountries = filteredCountriesRegion.filter((country) =>
+    country.name.common.toLowerCase().includes(searchField.toLowerCase())
+  );
 
   const fetchCountries = async () => {
     const response = await fetch(apiURL);
@@ -87,6 +82,7 @@ export default function Home() {
           <option className="hidden" value="">
             Filter by Region
           </option>
+          <option value="">All</option>
           <option value="Africa">Africa</option>
           <option value="America">America</option>
           <option value="Asia">Asia</option>
