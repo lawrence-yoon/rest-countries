@@ -5,19 +5,22 @@ import CountryCard from "@/components/CountryCard";
 import MagnifyingGlass from "@/components/ui/icons/MagnifyingGlass";
 
 const countriesFromLocalStorage = JSON.parse(localStorage.getItem("data"));
+const darkModeToggle = JSON.parse(localStorage.getItem("isDark"));
 
 const apiURL = "https://restcountries.com/v3.1/all";
 
 export default function Home() {
   const [countries, setCountries] = useState(countriesFromLocalStorage);
+  const [isDarkToggled, setIsDarkToggled] = useState(darkModeToggle);
   const [searchField, setSearchField] = useState("");
   const [filterField, setFilterField] = useState("");
 
-  // maybe 3 state things. one is original, from local storage. second is filtered countries, with a filter applied by the select handle filter. third is filter applied by search field handle search.
-  // my tries at utilizing the useeffect fell short with the handle filter, for some reason it didnt want to cooperate. i think it had something to do with when search field is empty, it sets filtered countries to default of countries.
-  // or i make two separete functions. first applies filter field, second applies search field.
-
-  // idea with the three states. a. is og, b. is filtered by region, c. is filtered by region filtered by searchfield. different states will be rendered based on if a field is empty or not. if search field is empty, show filteredfield. if filteredfield is empty, show countries.
+  // i think this page component does not know when the isdark is toggled. how can i make it so that i dont have to use layout as client for the usestate...
+  // maybe make some wrapper component, that has the state within it, and allows children. plan is to wrap it around both header and main.
+  // if this works, i can remove the unnecessary divs added for formating and darkmode. i cant have dark activated and have a dark: conditional within the same element classname string.
+  useEffect(() => {
+    localStorage.setItem("isDark", JSON.stringify(isDarkToggled));
+  }, []);
 
   // save most state to local storage, so that when user is routed back to root, previous filters should still be there. i think best way to do that is to put all these state into local storage.
 
@@ -54,46 +57,47 @@ export default function Home() {
   // }, [searchField, filterField]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center pt-20">
-      <div className="flex flex-col justify-between w-full px-4 gap-4">
-        {/* my thinking is, mutate the countries array?
+    <main className={`${isDarkToggled ? "dark" : ""}`}>
+      <div className="flex min-h-screen flex-col items-center pt-20 bg-light-gray text-dark-blue-2 dark:bg-dark-blue-1 dark:text-white">
+        <div className="flex flex-col justify-between w-full px-4 gap-4">
+          {/* my thinking is, mutate the countries array?
         or, create a copy, that renders if searchField exists, and hides the main one, if it doesnt.*/}
-        {/* <label for="search">Search</label> */}
-        <div className="flex flex-row border rounded-lg p-2">
-          <MagnifyingGlass className="p-2 px-6" />
-          <input
-            id="search"
-            name="search"
-            className="p-2 outline-none flex-grow"
-            type="text"
-            placeholder="Search for a country..."
-            onChange={(e) => handleSearch(e)}
-            value={searchField}
-          />
-        </div>
-        <p>{searchField}</p>
-        {/* <label for="filter">Filter</label> */}
-        <select
-          name="filter"
-          id="filter"
-          className="border rounded-lg w-fit p-4 self-start"
-          onChange={(e) => handleFilter(e)}
-        >
-          <option className="hidden" value="">
-            Filter by Region
-          </option>
-          <option value="">All</option>
-          <option value="Africa">Africa</option>
-          <option value="America">America</option>
-          <option value="Asia">Asia</option>
-          <option value="Europe">Europe</option>
-          <option value="Oceania">Oceania</option>
-        </select>
-        <p>
+          {/* <label for="search">Search</label> */}
+          <div className="flex flex-row border-transparent rounded-lg p-2 text-dark-gray dark:bg-dark-blue-0">
+            <MagnifyingGlass className="p-2 px-6" />
+            <input
+              id="search"
+              name="search"
+              className="p-2 outline-none flex-grow bg-transparent"
+              type="text"
+              placeholder="Search for a country..."
+              onChange={(e) => handleSearch(e)}
+              value={searchField}
+            />
+          </div>
+          {/* <p>{searchField}</p> */}
+          {/* <label for="filter">Filter</label> */}
+          <select
+            name="filter"
+            id="filter"
+            className="rounded-lg bg-white w-fit p-4 self-start dark:bg-dark-blue-0"
+            onChange={(e) => handleFilter(e)}
+          >
+            <option className="hidden" value="">
+              Filter by Region
+            </option>
+            <option value="">All</option>
+            <option value="Africa">Africa</option>
+            <option value="America">America</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Oceania">Oceania</option>
+          </select>
+          {/* <p>
           {filterField} {filteredCountries.length}
-        </p>
-      </div>
-      {/* {filteredCountries.length != 0 ? (
+        </p> */}
+        </div>
+        {/* {filteredCountries.length != 0 ? (
         <>
           {filteredCountries &&
             filteredCountries.map((country, index) => (
@@ -108,17 +112,17 @@ export default function Home() {
             ))}
         </>
       )} */}
-      <div className="flex flex-col w-full p-10 gap-6">
-        {filteredCountries &&
-          filteredCountries.map((country, index) => (
-            <CountryCard key={index} data={country} />
-          ))}
+        <div className="flex flex-col w-full p-10 gap-6">
+          {filteredCountries &&
+            filteredCountries.map((country, index) => (
+              <CountryCard key={index} data={country} />
+            ))}
+        </div>
+        <button className="bg-slate-500 text-black" onClick={fetchCountries}>
+          fetch countries
+        </button>
+        <p>api endpoint: {apiURL}</p>
       </div>
-
-      <button className="bg-slate-100 text-black" onClick={fetchCountries}>
-        fetch countries
-      </button>
-      <p>api endpoint: {apiURL}</p>
     </main>
   );
 }

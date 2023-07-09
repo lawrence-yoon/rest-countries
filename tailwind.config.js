@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,6 +16,7 @@ module.exports = {
       },
     },
     colors: {
+      ...colors,
       // Dark Blue (Dark Mode Elements): hsl(209, 23%, 22%)
       "dark-blue-0": "hsl(209, 23%, 22%)",
       // Very Dark Blue (Dark Mode Background): hsl(207, 26%, 17%)
@@ -26,7 +28,7 @@ module.exports = {
       // Very Light Gray (Light Mode Background): hsl(0, 0%, 98%)
       "light-gray": "hsl(0, 0%, 98%)",
       // white: dark mode text & light mode elements
-      white: "hsl(0, 0%, 100)",
+      white: "hsl(0, 0%, 100%)",
     },
   },
   plugins: [],

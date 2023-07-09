@@ -3,11 +3,12 @@ import Image from "next/image";
 function CountryCard({ data }) {
   return (
     <div
-      className="border rounded-md"
+      className="border-transparent rounded-md dark:bg-dark-blue-0"
       onClick={() => console.log("country card clicked")}
     >
-      <div className="grid place-content-center">
+      <div className="grid place-content-center ">
         <Image
+          className="rounded-t-md md:rounded-l-md"
           width={300}
           height={150}
           src={data.flags.svg}
