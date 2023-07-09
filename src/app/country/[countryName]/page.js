@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-
-const countriesFromLocalStorage = JSON.parse(localStorage.getItem("data"));
+import Link from "next/link";
+import useLocalStorage from "@/components/hooks/useLocalStorage";
 
 export default function CountryDetailPage({ params }) {
   // console.log(typeof params.countryName);
 
-  const [countries, setCountries] = useState(countriesFromLocalStorage);
+  const [countries, setCountries] = useLocalStorage("data", []);
   const [countryDetails, setCountryDetails] = useState({
     name: "name.common",
     nativeName: "name.nativeName.{kor}.common",
@@ -47,13 +47,19 @@ export default function CountryDetailPage({ params }) {
   const CountryDetailsCard = ({ ...props }) => {
     return (
       <div>
-        <button
+        <Link
+          className="bg-slate-500 p-2 px-4 border-transparent rounded-md"
+          href="/"
+        >
+          &lt; Back
+        </Link>
+
+        {/* <button
           className="block border"
           onClick={() => getCountryByName(params.countryName)}
         >
           getcountry by name
-        </button>
-        <button>back button</button>
+        </button> */}
         {/* <p>{params.countryName}</p> */}
         <span>{props.flag}</span>
         <p>{props.name}</p>
@@ -66,6 +72,7 @@ export default function CountryDetailPage({ params }) {
         <p>{props.currencies}</p>
         <p>{props.languages}</p>
         <p>{props.borderCountries}</p>
+        <p>{params.countryName}</p>
       </div>
     );
   };
@@ -76,7 +83,6 @@ export default function CountryDetailPage({ params }) {
 
   return (
     <div className="pt-20 p-10">
-      <div>CountryDetailPage</div>
       <CountryDetailsCard {...countryDetails} />
     </div>
   );

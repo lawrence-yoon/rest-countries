@@ -1,36 +1,39 @@
 import Image from "next/image";
+import Link from "next/link";
 
 function CountryCard({ data }) {
   return (
-    <div
-      className="border-transparent rounded-md dark:bg-dark-blue-0"
-      onClick={() => console.log("country card clicked")}
-    >
-      <div className="grid place-content-center ">
-        <Image
-          className="rounded-t-md md:rounded-l-md"
-          width={300}
-          height={150}
-          src={data.flags.svg}
-          alt="Picture of country flag"
-        />
+    <Link href={`/country/${data.name.common}`}>
+      <div
+        className="flex flex-col w-[300px] transition-transform border-transparent rounded-md h-full justify-between hover:-translate-y-1 hover:scale-105 dark:bg-dark-blue-0"
+        onClick={() => console.log("country card clicked")}
+      >
+        <div className="grid place-content-center">
+          <Image
+            className="rounded-t-md"
+            width={300}
+            height={150}
+            src={data.flags.svg}
+            alt="Picture of country flag"
+          />
+        </div>
+        <div className="p-4">
+          <h3 className="text-lg font-bold">{data.name.common}</h3>
+          <p>
+            <span className="font-semibold">Population: </span>
+            {data.population.toLocaleString("en-US")}
+          </p>
+          <p>
+            <span className="font-semibold">Region: </span>
+            {data.region}
+          </p>
+          <p>
+            <span className="font-semibold">Capital: </span>
+            {data.capital}
+          </p>
+        </div>
       </div>
-      <div className="p-4">
-        <h3 className="text-lg font-bold">{data.name.common}</h3>
-        <p>
-          <span className="font-semibold">Population: </span>
-          {data.population.toLocaleString("en-US")}
-        </p>
-        <p>
-          <span className="font-semibold">Region: </span>
-          {data.region}
-        </p>
-        <p>
-          <span className="font-semibold">Capital: </span>
-          {data.capital}
-        </p>
-      </div>
-    </div>
+    </Link>
   );
 }
 
