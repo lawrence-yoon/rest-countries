@@ -111,7 +111,7 @@ export default function Home() {
             ))}
         </>
       )} */}
-        <div className="flex flex-col w-full p-10 gap-6 md:flex-row md:flex-wrap md:justify-between">
+        <div className="flex flex-col w-full p-10 gap-6 md:flex-row md:flex-wrap md:justify-center">
           {filteredCountries &&
             filteredCountries.map((country, index) => (
               <CountryCard key={index} data={country} />

@@ -14,7 +14,7 @@ function CountryCard({ data }) {
             width={300}
             height={150}
             src={data.flags.svg}
-            alt="Picture of country flag"
+            alt={`${data.flags.alt ? data.flags.alt : "Picture of flag"}`}
           />
         </div>
         <div className="p-4">
