@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import useLocalStorage from "@/components/hooks/useLocalStorage";
+import Header from "@/components/Header";
+import useToggle from "@/components/hooks/useToggle";
+import CountryDetailsCard from "@/components/CountryDetailsCard";
 
 export default function CountryDetailPage({ params }) {
   // console.log(typeof params.countryName);
 
   const [countries, setCountries] = useLocalStorage("data", []);
+  const [isDarkToggled, setIsDarkToggled] = useToggle("isDark", false);
   const [countryDetails, setCountryDetails] = useState({
     name: "name.common",
     nativeName: "name.nativeName.{kor}.common",
@@ -22,7 +25,7 @@ export default function CountryDetailPage({ params }) {
     borderCountries: "borders",
   });
 
-  console.log(countries);
+  // console.log(countries);
 
   function getCountryByName(query) {
     const data = countries.filter((entry) => entry.name.common == query);
@@ -42,48 +45,14 @@ export default function CountryDetailPage({ params }) {
   // console.log(Object.values(object1));
   // Expected output: Array ["somestring", 42, false]
 
-  console.log(countryDetails);
-
-  const CountryDetailsCard = ({ ...props }) => {
-    return (
-      <div>
-        <Link
-          className="bg-slate-500 p-2 px-4 border-transparent rounded-md"
-          href="/"
-        >
-          &lt; Back
-        </Link>
-
-        {/* <button
-          className="block border"
-          onClick={() => getCountryByName(params.countryName)}
-        >
-          getcountry by name
-        </button> */}
-        {/* <p>{params.countryName}</p> */}
-        <span>{props.flag}</span>
-        <p>{props.name}</p>
-        <p>{props.nativeName}</p>
-        <p>{props.population}</p>
-        <p>{props.region}</p>
-        <p>{props.subRegion}</p>
-        <p>{props.capital}</p>
-        <p>{props.topLevelDomain}</p>
-        <p>{props.currencies}</p>
-        <p>{props.languages}</p>
-        <p>{props.borderCountries}</p>
-        <p>{params.countryName}</p>
-      </div>
-    );
-  };
-
   // have a loading state, to hide the processing time for the algorithm
   // fire the algorithm, getCountryByName(params.countryName),
   // render it out. hydrate the loading state ui?
 
   return (
-    <div className="pt-20 p-10">
-      <CountryDetailsCard {...countryDetails} />
-    </div>
+    <main className={`${isDarkToggled ? "dark" : ""}`}>
+      <Header handleToggle={setIsDarkToggled}></Header>
+      <CountryDetailsCard params={params.countryName} {...countryDetails} />
+    </main>
   );
 }

@@ -35,3 +35,7 @@ and inside the return()
     ))}
 </div>
 ```
+
+findbyname, and sending that as a nicely formatted param so the url does not have spaces. during search algorithm, if i even need one, ...
+wait, i can maybe just save data in form of state on click, and it ...
+wait, ive already thought of this. algorithm has to search through anyways, no difference if its before the route or after the route. at least aafter route, we can use some kind of loading state.

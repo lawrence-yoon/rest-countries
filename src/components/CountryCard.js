@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function CountryCard({ data }) {
   return (
-    <Link href={`/country/${data.name.common}`}>
+    <Link href={`/country/${data.name.common.replaceAll(" ", "-")}`}>
       <div
         className="flex flex-col w-[300px] transition-transform border-transparent rounded-md h-full justify-between hover:-translate-y-1 hover:scale-105 dark:bg-dark-blue-0"
         onClick={() => console.log("country card clicked")}
