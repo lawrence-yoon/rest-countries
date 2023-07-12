@@ -16,7 +16,7 @@ export default function useToggle(key, initialValue) {
 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));
-  }, [value]);
+  }, [key, value]);
 
   useDebugValue(value ?? "loading...");
 

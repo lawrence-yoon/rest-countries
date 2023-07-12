@@ -13,7 +13,7 @@ function CountryCard({ data }) {
             className="rounded-t-md"
             width={300}
             height={150}
-            src={data.flags.svg}
+            src={data.flags.svg ? data.flags.svg : data.flags.png}
             alt={`${data.flags.alt ? data.flags.alt : "Picture of flag"}`}
           />
         </div>

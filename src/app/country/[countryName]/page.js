@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import useLocalStorage from "@/components/hooks/useLocalStorage";
 import Header from "@/components/Header";
 import useToggle from "@/components/hooks/useToggle";
@@ -20,7 +20,9 @@ export default function CountryDetailPage({ params }) {
   );
   const country = countryByName[0];
   const countryCode = country.cca3;
-  const countryNativeName = Object.values(countryByName[0].name.nativeName);
+  const countryNativeName = country.name.nativeName
+    ? Object.values(country.name.nativeName)
+    : null;
 
   function borderCountry(inputString) {
     const countryByCode = countries.filter(
@@ -34,15 +36,17 @@ export default function CountryDetailPage({ params }) {
     ? country.borders.map((border) => borderCountry(border))
     : [];
 
-  const countryCurrencies = Object.values(country.currencies).map(
-    (item) => item.name
-  );
+  const countryCurrencies = country.currencies
+    ? Object.values(country.currencies).map((item) => item.name)
+    : null;
 
-  const countryLanguages = Object.values(country.languages);
+  const countryLanguages = country.languages
+    ? Object.values(country.languages)
+    : null;
 
   const countryDetails = {
     name: country.name.common,
-    nativeName: countryNativeName[0].common,
+    nativeName: countryNativeName ? countryNativeName[0].common : null,
     flag: country.flags.svg,
     alt: country.flags.alt,
     population: country.population.toLocaleString("en-US"),
