@@ -10,9 +10,13 @@ function getSavedValue(key, initialValue) {
 }
 
 export default function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    return getSavedValue(key, initialValue);
-  });
+  const [value, setValue] = useState(initialValue);
+  // first useeffect, handles getting value from storage.
+  // second useeffect, handles updating stored value when we change value in our state.
+  useEffect(() => {
+    const stored = getSavedValue(key, initialValue);
+    setValue(stored ? stored : initialValue);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));
