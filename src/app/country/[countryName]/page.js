@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import useToggle from "@/components/hooks/useToggle";
 import CountryDetailsCard from "@/components/CountryDetailsCard";
 import Link from "next/link";
+import { FetchDataButton } from "@/components/ui/FetchDataButton";
 
 export default function CountryDetailPage({ params }) {
   // console.log(typeof params.countryName);
@@ -71,7 +72,7 @@ export default function CountryDetailPage({ params }) {
           &lt; Back
         </Link>
         {/* <CountryDetailsCard {...countryDetails} /> */}
-        <p>{country ? JSON.stringify(country) : "problem"}</p>
+        <p>{country ? JSON.stringify(country) : <FetchDataButton />}</p>
       </div>
     </main>
   );
