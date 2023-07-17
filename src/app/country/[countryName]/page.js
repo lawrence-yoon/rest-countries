@@ -19,63 +19,46 @@ export default function CountryDetailPage({ params }) {
       country.name.common.toLowerCase() === countryNameWithSpaces.toLowerCase()
   );
   const country = countryByName[0];
-  const countryCode = country.cca3;
-  const countryNativeName = country.name.nativeName
-    ? Object.values(country.name.nativeName)
-    : null;
+  // const countryCode = country.cca3;
+  // const countryNativeName = country.name.nativeName
+  //   ? Object.values(country.name.nativeName)
+  //   : null;
 
-  function borderCountry(inputString) {
-    const countryByCode = countries.filter(
-      (item) => item.cca3.toLowerCase() === inputString.toLowerCase()
-    );
-    const outputString = countryByCode[0].name.common;
-    return outputString;
-  }
+  // function borderCountry(inputString) {
+  //   const countryByCode = countries.filter(
+  //     (item) => item.cca3.toLowerCase() === inputString.toLowerCase()
+  //   );
+  //   const outputString = countryByCode[0].name.common;
+  //   return outputString;
+  // }
 
-  const countryBorders = country.borders
-    ? country.borders.map((border) => borderCountry(border))
-    : [];
+  // const countryBorders = country.borders
+  //   ? country.borders.map((border) => borderCountry(border))
+  //   : [];
 
-  const countryCurrencies = country.currencies
-    ? Object.values(country.currencies).map((item) => item.name)
-    : null;
+  // const countryCurrencies = country.currencies
+  //   ? Object.values(country.currencies).map((item) => item.name)
+  //   : null;
 
-  const countryLanguages = country.languages
-    ? Object.values(country.languages)
-    : null;
+  // const countryLanguages = country.languages
+  //   ? Object.values(country.languages)
+  //   : null;
 
-  const countryDetails = {
-    name: country.name.common,
-    nativeName: countryNativeName ? countryNativeName[0].common : null,
-    flag: country.flags.svg,
-    alt: country.flags.alt,
-    population: country.population.toLocaleString("en-US"),
-    region: country.region,
-    subRegion: country.subregion,
-    capital: country.capital,
-    //tld, currencies, languages, bordercountries, are arrays.
-    topLevelDomain: countryByName[0].tld,
-    currencies: countryCurrencies,
-    languages: countryLanguages,
-    borderCountries: countryBorders,
-  };
-  // getCountryByName(params.countryName);
-  // how is this going to work with countries with a space? perhaps include a - ?
-  // gonna be another layer to clean up the query for queries with spaces
-  // need to figure out the special keys, like KOR, KRW, kor. first thought, just save the data in json, then when rendering it, do a loop that will render all children, into a string.
-  //
-  // Object.values()
-  // const object1 = {
-  //   a: 'somestring',
-  //   b: 42,
-  //   c: false
+  // const countryDetails = {
+  //   name: country.name.common,
+  //   nativeName: countryNativeName ? countryNativeName[0].common : null,
+  //   flag: country.flags.svg,
+  //   alt: country.flags.alt,
+  //   population: country.population.toLocaleString("en-US"),
+  //   region: country.region,
+  //   subRegion: country.subregion,
+  //   capital: country.capital,
+  //   //tld, currencies, languages, bordercountries, are arrays.
+  //   topLevelDomain: countryByName[0].tld,
+  //   currencies: countryCurrencies,
+  //   languages: countryLanguages,
+  //   borderCountries: countryBorders,
   // };
-  // console.log(Object.values(object1));
-  // Expected output: Array ["somestring", 42, false]
-
-  // have a loading state, to hide the processing time for the algorithm
-  // fire the algorithm, getCountryByName(params.countryName),
-  // render it out. hydrate the loading state ui?
 
   return (
     <main className={`${isDarkToggled ? "dark" : ""}`}>
@@ -87,9 +70,9 @@ export default function CountryDetailPage({ params }) {
         >
           &lt; Back
         </Link>
-        <CountryDetailsCard params={params.countryName} {...countryDetails} />
+        {/* <CountryDetailsCard {...countryDetails} /> */}
+        <p>{country ? JSON.stringify(country) : "problem"}</p>
       </div>
-      {/* <p>{JSON.stringify(countryByName)}</p> */}
     </main>
   );
 }
