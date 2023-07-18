@@ -20,6 +20,10 @@ export default function Home() {
     const querySearch = e.target.value;
     setFilterField(querySearch);
   }
+  function handleData(data) {
+    setCountries(data);
+    localStorage.setItem("data", JSON.stringify(countries));
+  }
 
   const filteredCountriesRegion = countries.filter((country) =>
     country.region.toLowerCase().includes(filterField.toLowerCase())
@@ -69,7 +73,7 @@ export default function Home() {
               <CountryCard key={index} data={country} />
             ))}
         </div>
-        <FetchDataButton />
+        <FetchDataButton setData={handleData} />
         {/* <p>api endpoint: {apiURL}</p> */}
       </div>
     </main>

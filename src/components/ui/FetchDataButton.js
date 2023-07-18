@@ -1,10 +1,10 @@
-export const FetchDataButton = () => {
+export const FetchDataButton = ({ setData = () => {} }) => {
   const apiURL = "https://restcountries.com/v3.1/all";
   const fetchCountries = async () => {
     const response = await fetch(apiURL);
     const data = await response.json();
-    setCountries(data);
-    localStorage.setItem("data", JSON.stringify(countries));
+    setData(data);
+    // localStorage.setItem("data", JSON.stringify(countries));
   };
   return (
     <button

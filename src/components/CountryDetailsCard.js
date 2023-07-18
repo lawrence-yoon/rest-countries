@@ -4,12 +4,14 @@ import Image from "next/image";
 export default function CountryDetailsCard({ params, ...props }) {
   return (
     <div className="flex flex-col gap-4 bg-transparent md:flex-row">
-      <Image
-        src={props.flag}
-        width={350}
-        height={150}
-        alt={`${props.alt ? props.alt : "Picture of flag"}`}
-      ></Image>
+      {props.flag ? (
+        <Image
+          src={props.flag}
+          width={350}
+          height={150}
+          alt={`${props.alt ? props.alt : "Picture of flag"}`}
+        ></Image>
+      ) : null}
       <div className="flex flex-col gap-1">
         <p className="font-bold text-2xl">{props.name}</p>
         <p>
