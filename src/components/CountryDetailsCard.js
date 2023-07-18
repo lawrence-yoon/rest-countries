@@ -5,14 +5,16 @@ export default function CountryDetailsCard({ params, ...props }) {
   return (
     <div className="flex flex-col gap-4 bg-transparent md:flex-row">
       {props.flag ? (
-        <Image
-          src={props.flag}
-          width={350}
-          height={150}
-          alt={`${props.alt ? props.alt : "Picture of flag"}`}
-        ></Image>
+        <div className="relative min-w-80 md:w-5/12">
+          <Image
+            className="object-contain"
+            src={props.flag}
+            alt={`${props.alt ? props.alt : "Picture of flag"}`}
+            fill
+          />
+        </div>
       ) : null}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 md:w-6/12">
         <p className="font-bold text-2xl">{props.name}</p>
         <p>
           <span className="font-bold">Native Name: </span>

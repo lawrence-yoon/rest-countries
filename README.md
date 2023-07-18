@@ -39,3 +39,7 @@ and inside the return()
 findbyname, and sending that as a nicely formatted param so the url does not have spaces. during search algorithm, if i even need one, ...
 wait, i can maybe just save data in form of state on click, and it ...
 wait, ive already thought of this. algorithm has to search through anyways, no difference if its before the route or after the route. at least aafter route, we can use some kind of loading state.
+
+had an issue with data processing. broke my app when accessing dynamic route. needed conditional rendering. have a post of it up.
+
+debounce. i was learning it, along with throttling and higher order functions. i do not think i need it here. actually, it kinda is cool to see it being changed realtime. i do not think google search even uses debounce. however, i will commit this then try it out.
