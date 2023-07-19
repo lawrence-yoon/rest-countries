@@ -38,7 +38,7 @@ export default function Home() {
     <main className={`${isDarkToggled ? "dark" : ""}`}>
       <Header handleToggle={setIsDarkToggled} />
       <div className="flex min-h-screen flex-col items-center pt-20 pb-4 bg-light-gray text-dark-blue-2 dark:bg-dark-blue-1 dark:text-white">
-        <div className="flex flex-col justify-between w-full px-4 gap-4 md:flex-row">
+        <div className="flex flex-col justify-between w-full px-4 gap-4 md:flex-row md:px-10">
           <div className="flex flex-row order-0 border-transparent rounded-lg p-2 text-dark-gray dark:bg-dark-blue-0">
             <MagnifyingGlass className="p-2 px-6" />
             <input
