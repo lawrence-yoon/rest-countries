@@ -5,7 +5,7 @@ function CountryCard({ data }) {
   return (
     <Link href={`/country/${data.name.common.replaceAll(" ", "-")}`}>
       <div
-        className="flex flex-col w-[300px] transition-transform border-transparent rounded-md h-full justify-between hover:-translate-y-1 hover:scale-105 dark:bg-dark-blue-0"
+        className="flex flex-col w-[300px] transition-transform border-transparent rounded-md h-full justify-between md:hover:-translate-y-1 md:hover:scale-105 dark:bg-dark-blue-0"
         onClick={() => console.log("country card clicked")}
       >
         <div className="grid place-content-center">

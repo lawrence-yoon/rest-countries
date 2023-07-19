@@ -5,6 +5,7 @@ import CountryCard from "@/components/CountryCard";
 import MagnifyingGlass from "@/components/ui/icons/MagnifyingGlass";
 import Header from "@/components/Header";
 import { FetchDataButton } from "@/components/ui/FetchDataButton";
+import Link from "next/link";
 
 export default function Home() {
   const [countries, setCountries] = useLocalStorage("data", []);
@@ -37,8 +38,8 @@ export default function Home() {
     <main className={`${isDarkToggled ? "dark" : ""}`}>
       <Header handleToggle={setIsDarkToggled} />
       <div className="flex min-h-screen flex-col items-center pt-20 pb-4 bg-light-gray text-dark-blue-2 dark:bg-dark-blue-1 dark:text-white">
-        <div className="flex flex-col justify-between w-full px-4 gap-4">
-          <div className="flex flex-row border-transparent rounded-lg p-2 text-dark-gray dark:bg-dark-blue-0">
+        <div className="flex flex-col justify-between w-full px-4 gap-4 md:flex-row">
+          <div className="flex flex-row order-0 border-transparent rounded-lg p-2 text-dark-gray dark:bg-dark-blue-0">
             <MagnifyingGlass className="p-2 px-6" />
             <input
               id="search"
@@ -51,9 +52,10 @@ export default function Home() {
             />
           </div>
           <select
+            aria-label="region"
             name="filter"
             id="filter"
-            className="rounded-lg bg-white w-fit p-4 self-start dark:bg-dark-blue-0"
+            className="order-1 rounded-lg bg-white w-fit p-4 self-start dark:bg-dark-blue-0 md:self-end md:order-2"
             onChange={(e) => handleFilter(e)}
           >
             <option className="hidden" value="">
@@ -66,6 +68,12 @@ export default function Home() {
             <option value="Europe">Europe</option>
             <option value="Oceania">Oceania</option>
           </select>
+          <Link
+            className="order-2 text-center my-auto px-1 py-1 gap-3 whitespace-nowrap shadow-sm border border-b-2 border-dark-blue-0 rounded-md md:order-1 hover:border-dark-gray hover:text-dark-gray dark:border-light-gray dark:text-light-gray dark:bg-dark-blue-0 dark:hover:border-dark-gray dark:hover:text-dark-gray"
+            href="/country/random"
+          >
+            See random country
+          </Link>
         </div>
         <div className="flex flex-col w-full p-10 gap-6 md:flex-row md:flex-wrap md:justify-center">
           {filteredCountries &&
