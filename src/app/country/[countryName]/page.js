@@ -48,7 +48,9 @@ export default function CountryDetailPage({ params }) {
       : [];
 
   const countryLanguages =
-    country && country.languages ? Object.values(country.languages) : [];
+    country && country.languages
+      ? Object.values(country.languages).map((item) => item + " ")
+      : [];
 
   const countryDetails = {
     name: country ? country.name.common : null,

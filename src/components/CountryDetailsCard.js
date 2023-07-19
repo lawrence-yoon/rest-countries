@@ -5,7 +5,7 @@ export default function CountryDetailsCard({ params, ...props }) {
   return (
     <div className="flex flex-col gap-4 bg-transparent md:flex-row">
       {props.flag ? (
-        <div className="relative min-w-80 md:w-5/12">
+        <div className="relative h-52 md:w-5/12">
           <Image
             className="object-contain"
             src={props.flag}
